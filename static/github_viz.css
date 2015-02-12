@@ -1,0 +1,125 @@
+body {
+	background-color: #b2b2ff;
+	font-family: 'Raleway', sans-serif;
+}
+
+.title {
+	text-align: center;
+	font-size: 36px;
+	font-family: 'Pacifico', cursive;
+}
+
+form {
+	margin: 0 auto;
+	width: 70%;
+	font-size: 18;
+}
+
+#submitText {
+	display: inline;
+}
+
+.form_container {
+	margin: 20px auto;
+	width: 50%;
+}
+
+.data_container {
+	margin: 0 auto;
+	width: 50%;
+	border: 1px solid;
+	height: 330px;
+	padding: 20px;
+	background-color: #fff;
+}
+
+.wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+.chart_container {
+	float: left;
+	margin: 0 auto;
+	width: 4%;
+}
+
+.user {
+	font-size: 32px;
+	margin: 0 0 10px;
+}
+
+.languages_container {
+	margin: 10px 0;
+	width: 40%;
+	float: right;
+	font-size: 20px;
+}
+
+.num_hover {
+	display: none;
+	margin-left: 10px;
+	font-size: 14px;
+	width: 35%;
+	background: rgba(211,211,211,0.6);
+	padding: 3px;
+	border-radius: 5%;
+	text-align: center;
+}
+
+.coding_language:hover > .num_hover {
+	display: initial;
+}
+
+.share_container {
+	width: 100%;
+	float: left;
+	text-align: center;
+	font-size: 24px;
+}
+
+.share_container a,
+.share_container a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+.share_container a:hover,
+.share_container a:active {
+	text-decoration: none;
+	color: #E1A175;
+}
+
+.followers_container {
+	float: left;
+	text-align: center;
+	margin: 20px auto 0;
+	width: 100%;
+	font-size: 30px;
+	font-family: 'Pacifico', cursive;
+
+
+}
+
+.follower_name {
+	margin: 10px 0;
+	font-size: 20px;
+	font-family: 'Raleway', sans-serif;
+}
+
+.follower_name a,
+.follower_name a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+.follower_name a:hover,
+.follower_name a:active {
+	text-decoration: none;
+	color: #E1A175;
+}
+
+.pusheen {
+	margin: 15px auto;
+	display: block;
+}
