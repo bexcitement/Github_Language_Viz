@@ -1,16 +1,45 @@
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="/static/github_viz.css">
+    <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"> -->
+    <link href='http://fonts.googleapis.com/css?family=Pacifico|Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/static/Chart.js"></script>
+    <script src="/static/github_viz.js"></script>
+    <title>Github Language Visualization</title>
+    <meta name=”description” content=”Github language visualization by Becca Bruggman”>
   </head>
   <body>
-    <p>
-      Well, hello there!
-    </p>
-    <p>
-      We're going to now talk to the GitHub API. Ready?
-      <a href="https://github.com/login/oauth/authorize?scope=user:{{email}}&client_id={{id}}">Click here</a> to begin!</a>
-    </p>
-    <p>
-      If that link doesn't work, remember to provide your own <a href="/v3/oauth/#web-application-flow">Client ID</a>!
-    </p>
+    <p class="title"> Well, hello there!</p>
+    <p class="title"> Would you like a chart of all the languages you use on github?</p>
+    <div class="home_wrapper">
+      <div class="home_chart_container">
+        <canvas id="homeChart" width="300" height="300"></canvas>
+      </div>
+      <div class='languages_container'>
+        <div class='user'>bexcitement</div>
+        <div class="coding_language"> Python : 30.0%</div>
+        <div class="coding_language"> C++ : 40.0%</div>
+        <div class="coding_language"> Javascript : 30.%</div>
+      </div>
+    </div>
+
+
+    <div class="login_container">
+      <div class="git_login_button">
+        <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id={{id}}">Login with Github</a>
+      </div>
+      <div class="login_image">
+        <img class="octocat" src="/static/Octocat.jpg" alt="Octocat"/>
+      </div>
+
+    </div>
+
+    <script type="text/javascript">
+      var ctx = $("#homeChart").get(0).getContext("2d");
+      var myPieChart = new Chart(ctx).Pie(home_data,options);
+
+    </script>
   </body>
 </html>

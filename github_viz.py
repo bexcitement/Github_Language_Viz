@@ -1,13 +1,11 @@
 import requests
 
-def githubViz(user):
-	r = requests.get('https://api.github.com/users/' + user + '/repos?per_page=1000')
-	followers = requests.get('https://api.github.com/users/' + user + '/followers?per_page=1000')
+def githubViz(user, cl_id, cl_secret):
+	r = requests.get('https://api.github.com/users/' + user + '/repos?per_page=1000&client_id=' + cl_id + '&client_secret=' + cl_secret)
+	followers = requests.get('https://api.github.com/users/' + user + '/followers?per_page=1000&client_id=' + cl_id + '&client_secret=' + cl_secret)
 	
 	json_response = r.json()
 	json_followers = followers.json()
-	# print json_response
-	# print json_followers
 
 	if isinstance(json_response, dict):
 		languages_dict = 'sad face'

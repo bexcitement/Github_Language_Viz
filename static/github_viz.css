@@ -1,5 +1,5 @@
 body {
-	background-color: #b2b2ff;
+	/*background-color: #b2b2ff;*/
 	font-family: 'Raleway', sans-serif;
 }
 
@@ -7,6 +7,7 @@ body {
 	text-align: center;
 	font-size: 36px;
 	font-family: 'Pacifico', cursive;
+	margin: 0 0 20px;
 }
 
 form {
@@ -38,7 +39,8 @@ form {
 	height: 100%;
 }
 
-.chart_container {
+.chart_container,
+.home_chart_container {
 	float: left;
 	margin: 0 auto;
 	width: 4%;
@@ -122,4 +124,42 @@ form {
 .pusheen {
 	margin: 15px auto;
 	display: block;
+}
+
+/* Login Page css */
+
+.home_wrapper {
+	height: 50%;
+	width: 80%;
+	margin: 0 auto;
+}
+.git_login_button {
+	width: 45%;
+	text-align: center;
+	padding: 25px 0px;
+	background-color: #b2b2ff;
+	float: left;
+	margin: 100px 0 0;
+}
+
+.git_login_button a,
+.git_login_button a:visited,
+.git_login_button a:hover,
+.git_login_button a:active {
+	text-decoration: none;
+	color: black;
+}
+
+.login_container {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.login_image {
+	width: 50%;
+	float: right;
+}
+
+.octocat {
+	width: 300px;
 }
