@@ -7,12 +7,15 @@ body {
 	text-align: center;
 	font-size: 36px;
 	font-family: 'Pacifico', cursive;
-	margin: 0 0 20px;
+	/*font-family: 'VT323';*/
+	/*font-family: 'Special Elite', cursive;*/
+	margin: 0px auto 20px;
+	width: 50%;
 }
 
 form {
 	margin: 0 auto;
-	width: 70%;
+	width: 40%;
 	font-size: 18;
 }
 
@@ -22,16 +25,20 @@ form {
 
 .form_container {
 	margin: 20px auto;
-	width: 50%;
+	width: 100%;
 }
 
 .data_container {
-	margin: 0 auto;
-	width: 50%;
-	border: 1px solid;
+	margin: 0 auto 60px;
+	width: 80%;
 	height: 330px;
 	padding: 20px;
 	background-color: #fff;
+}
+
+#myChart {
+	display: block;
+	margin: 0 auto;
 }
 
 .wrapper {
@@ -39,11 +46,10 @@ form {
 	height: 100%;
 }
 
-.chart_container,
-.home_chart_container {
+.chart_container{
 	float: left;
 	margin: 0 auto;
-	width: 4%;
+	width: 60%;
 }
 
 .user {
@@ -78,6 +84,7 @@ form {
 	float: left;
 	text-align: center;
 	font-size: 24px;
+	margin: 20px 0;
 }
 
 .share_container a,
@@ -89,16 +96,25 @@ form {
 .share_container a:hover,
 .share_container a:active {
 	text-decoration: none;
-	color: #E1A175;
+	color: #9CDAEF;
+}
+
+.followers_title {
+	text-decoration: underline;
 }
 
 .followers_container {
-	float: left;
 	text-align: center;
-	margin: 20px auto 0;
-	width: 100%;
+	margin: 20px auto 40px;
+	width: 50%;
 	font-size: 30px;
 	font-family: 'Pacifico', cursive;
+	-webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+    -webkit-column-gap: 20px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 20px; /* Firefox */
+    column-gap: 20px;
 
 
 }
@@ -118,7 +134,7 @@ form {
 .follower_name a:hover,
 .follower_name a:active {
 	text-decoration: none;
-	color: #E1A175;
+	color: #9CDAEF;
 }
 
 .pusheen {
@@ -129,30 +145,87 @@ form {
 /* Login Page css */
 
 .home_wrapper {
-	height: 50%;
-	width: 80%;
+	min-height: 500px;
+	width: 90%;
 	margin: 0 auto;
 }
+
+.home_about {
+	width: 30%;
+	float: left;
+	margin: 30px 0 0;
+	padding: 20px;
+}
+
+.about_title {
+	font-size: 20px;
+	font-weight: bold;
+	padding: 10px 0;
+}
+
+.about_item {
+	padding: 0px 0px 10px 10px;
+}
+
+.get_yours_button {
+	text-align: center;
+	padding: 25px 0px;
+	background-color: #9CDAEF;
+	width: 50%;
+	margin: 0 auto;
+}
+
+.home_chart_container {
+	width: 40%;
+	float: left;
+	margin: 20px 0 0;
+}
+
+#homeChart {
+	display: block;
+	margin: 0 auto;
+
+}
+
+.home_languages_container {
+	width: 20%;
+	float: left;
+	font-size: 24px;
+	margin: 40px 0 0 40px;
+}
+
+.home_wrapper .languages_container {
+	width: 30%;
+	height: 100%;
+	float: left;
+}
+
+
 .git_login_button {
 	width: 45%;
 	text-align: center;
 	padding: 25px 0px;
-	background-color: #b2b2ff;
-	float: left;
+	background-color: #9CDAEF;
+	float: left;	
 	margin: 100px 0 0;
 }
 
-.git_login_button a,
-.git_login_button a:visited,
-.git_login_button a:hover,
-.git_login_button a:active {
+.login_container a,
+.login_container a:visited,
+.login_container a:hover,
+.login_container a:active,
+.home_about a,
+.home_about a:visited,
+.home_about a:hover,
+.home_about a:active {
 	text-decoration: none;
 	color: black;
 }
 
 .login_container {
 	width: 50%;
-	margin: 0 auto;
+	margin: 100px auto 50px;
+	min-height: 350px;
 }
 
 .login_image {
@@ -163,3 +236,25 @@ form {
 .octocat {
 	width: 300px;
 }
+
+hr {
+	margin: 20px auto;
+}
+
+footer {
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 5%;
+	padding: 5px;
+}
+
+.full_wrapper {
+	min-height: 95%;
+}
+
+.full_wrapper:after {
+	content: "";
+	display: block;
+}
+

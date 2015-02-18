@@ -26,7 +26,7 @@ animateScale : false
 }];
 
 var home_data = [
-	{
+	[{
 	value: 30,
 	label: "Python",
 	color: "#788200",
@@ -42,10 +42,52 @@ var home_data = [
 	},
 	{
 	value: 30,
-	label: "Javascript",
+	label: "Haskell",
 	color: "#730073",
 	highlight: "#730073"
-	}
+	}],
+	[{
+	value: 15,
+	label: "Scala",
+	color: "#b2b2ff",
+	highlight: "#b2b2ff"
+
+	},
+	{
+	value: 65,
+	label: "Javascript",
+	color: "#00ff25",
+	highlight: "#00ff25" 
+
+	},
+	{
+	value: 20,
+	label: "Rust",
+	color: "#cf7700",
+	highlight: "#cf7700"
+	}],
+	[{
+	value: 10,
+	label: "CSS",
+	color: "#730073",
+	highlight: "#730073"
+
+	},
+	{
+	value: 20,
+	label: "PHP",
+	color: "#00824b",
+	highlight: "#00824b"
+
+	},
+	{
+	value: 70,
+	label: "Java",
+	color: "#ff005a",
+	highlight: "#ff005a"
+	}],
+
+
 ];
 
 var colors = {
@@ -99,3 +141,32 @@ var colors = {
 	}
 
 };
+
+var timer = 0;
+
+function setResetInterval(bool){
+  if(bool){
+  	console.log('hai')
+    timer = setInterval(function(){
+      count--;
+      console.log(count)
+      myPieChart = new Chart(ctx).Pie(home_data[count],options);
+      $(".home_languages_container").empty();
+      for (item in home_data[count]) {
+      	$(".home_languages_container").append('<div class="coding_language" style="color:' + home_data[count][item].color + '">' + home_data[count][item].label +  ' : ' + home_data[count][item].value + '.0%</div>')
+      }
+      if (count == 0) {
+        count=3;
+      }
+    }, 2000);
+  }else{
+  	console.log('clear')
+    clearInterval(timer); 
+  }
+};
+
+
+$('.follower_title').on('click', function() {
+	$('.followers_container').hide()
+})
+

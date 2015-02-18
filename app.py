@@ -9,42 +9,46 @@ import re
 
 app = Flask(__name__)
 
-id = #client id
-secret = #client secret
+id = # client id
+secret = # client secret
 
 @app.route('/', methods=['GET', 'POST'])
 def index(follower=None):
-	
-	if request.method =='GET' and 'username' in request.args:
+
+	if request.method =='GET' and 'username' in request.args and 'code' in request.args:
 		form = UserSubmit()
 		username = request.args['username']
+		code = request.args['code']
 
 		git_data = githubViz(username, id, secret)
 		github_user = git_data[0]
 		github_user_followers = sorted([x.encode('utf-8') for x in git_data[1]], key=lambda s: s.lower())
 		return render_template('github_viz.html', form=form, github_viz = github_user, 
-			followers = github_user_followers, username = username)
+			followers = github_user_followers, username = username, code = code)
 
 	elif request.method =='GET':
 		return redirect('/git_auth')
 
-	elif request.method == 'POST':
+	elif request.method == 'POST' and 'code' in request.args:
 		form = UserSubmit()
 
+
 		username = request.form.get('username')
+		print username
+		code = request.args['code']
 		git_data = githubViz(username, id, secret)
 		github_user = git_data[0]
 		github_user_followers = sorted([x.encode('utf-8') for x in git_data[1]], key=lambda s: s.lower())
 		return render_template('github_viz.html', form=form, github_viz = github_user, 
-			followers = github_user_followers, username = username)	
+			followers = github_user_followers, username = username, code=code)	
 
-@app.route('/?username=<follower>', methods=['GET', 'POST'])
+@app.route('/follower_chart?username=<follower>', methods=['GET', 'POST'])
 def follower(follower=None):
 	form = UserSubmit()
 
-	if request.method == 'GET':
+	if request.method == 'GET' and 'username' in request.args:
 		username = follower
-		git_data = githubViz(username)
+		git_data = githubViz(username, id, secret)
 		github_user = git_data[0]
 		github_user_followers = sorted([x.encode('utf-8') for x in git_data[1]], key=lambda s: s.lower())
 		return render_template('github_viz.html', form=form, github_viz = github_user, 
@@ -72,7 +76,7 @@ def callback():
 		get_string = json.load(get_url)
 		username = get_string['login']
 
-		return redirect(url_for('.index', username=username))
+		return redirect(url_for('.index', username=username, code=session_code))
 	except (ValueError, KeyError, TypeError):
 		return render_template('github_viz.html', form=form)	
 
