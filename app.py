@@ -9,7 +9,7 @@ import re
 
 app = Flask(__name__)
 
-id = # client id
+id = #client id
 secret = # client secret
 
 @app.route('/', methods=['GET', 'POST'])
@@ -42,17 +42,18 @@ def index(follower=None):
 		return render_template('github_viz.html', form=form, github_viz = github_user, 
 			followers = github_user_followers, username = username, code=code)	
 
-@app.route('/follower_chart?username=<follower>', methods=['GET', 'POST'])
-def follower(follower=None):
-	form = UserSubmit()
+# only used for navigating to followers under chart
+# @app.route('/follower_chart?username=<follower>', methods=['GET', 'POST'])
+# def follower(follower=None):
+# 	form = UserSubmit()
 
-	if request.method == 'GET' and 'username' in request.args:
-		username = follower
-		git_data = githubViz(username, id, secret)
-		github_user = git_data[0]
-		github_user_followers = sorted([x.encode('utf-8') for x in git_data[1]], key=lambda s: s.lower())
-		return render_template('github_viz.html', form=form, github_viz = github_user, 
-			followers = github_user_followers, username = follower)
+# 	if request.method == 'GET' and 'username' in request.args:
+# 		username = follower
+# 		git_data = githubViz(username, id, secret)
+# 		github_user = git_data[0]
+# 		github_user_followers = sorted([x.encode('utf-8') for x in git_data[1]], key=lambda s: s.lower())
+# 		return render_template('github_viz.html', form=form, github_viz = github_user, 
+# 			followers = github_user_followers, username = follower)
 
 @app.route('/user_chart', methods=['GET', 'POST'])
 def callback():

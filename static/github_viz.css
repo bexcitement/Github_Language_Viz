@@ -29,7 +29,7 @@ form {
 }
 
 .data_container {
-	margin: 0 auto 60px;
+	margin: 0 auto 100px;
 	width: 80%;
 	height: 330px;
 	padding: 20px;
@@ -80,9 +80,8 @@ form {
 }
 
 .share_container {
-	width: 100%;
+	width: 20%;
 	float: left;
-	text-align: center;
 	font-size: 24px;
 	margin: 20px 0;
 }
@@ -97,6 +96,11 @@ form {
 .share_container a:active {
 	text-decoration: none;
 	color: #9CDAEF;
+}
+
+.icon_container {
+	width: 60%;
+	margin: 0 auto;
 }
 
 .followers_title {
@@ -147,7 +151,7 @@ form {
 .home_wrapper {
 	min-height: 500px;
 	width: 90%;
-	margin: 0 auto;
+	margin: 40px auto 0;
 }
 
 .home_about {
@@ -208,6 +212,7 @@ form {
 	background-color: #9CDAEF;
 	float: left;	
 	margin: 100px 0 0;
+	text-transform: uppercase;
 }
 
 .login_container a,
@@ -224,7 +229,7 @@ form {
 
 .login_container {
 	width: 50%;
-	margin: 100px auto 50px;
+	margin: 100px auto 0px;
 	min-height: 350px;
 }
 
