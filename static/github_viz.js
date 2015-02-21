@@ -21,7 +21,7 @@ animationEasing : "easeOutBounce",
 animateRotate : true,
 
 //Boolean - Whether we animate scaling the Doughnut from the centre
-animateScale : false
+animateScale : false,
 
 }];
 
@@ -146,7 +146,6 @@ var timer = 0;
 
 function setResetInterval(bool){
   if(bool){
-  	console.log('hai')
     timer = setInterval(function(){
       count--;
       console.log(count)
@@ -160,13 +159,40 @@ function setResetInterval(bool){
       }
     }, 2000);
   }else{
-  	console.log('clear')
     clearInterval(timer); 
   }
 };
 
+var format_languages = function(){
+	$('.follower_title').on('click', function() {
+		$('.followers_container').hide()
+	})
 
-$('.follower_title').on('click', function() {
-	$('.followers_container').hide()
-})
+	$('.lang_num').each(function() {
+		var lang_num = $(this).text();
+		$(this).text(((lang_num / total) * 100).toFixed(2) + '%')
+	});
+
+	$('.coding_language').each(function(index) {
+		$(this).css('color', (language_data[index].color).toString());
+	})
+
+	var all_languages = $('.languages_container');
+	var language_list = all_languages.find('.coding_language');
+
+	language_list.sort(function(a,b){
+		var an = parseInt(a.getAttribute('data-name'), 10),
+		bn = parseInt(b.getAttribute('data-name'), 10);
+
+		if(an < bn) {
+			return 1;
+		}
+		if(an > bn) {
+			return -1;
+		}
+			return 0;
+	});
+
+	language_list.detach().appendTo(all_languages);
+};
 

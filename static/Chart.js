@@ -47,7 +47,6 @@
 		this.aspectRatio = this.width / this.height;
 		//High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
 		helpers.retinaScale(this);
-
 		return this;
 	};
 	//Globally expose the defaults to allow for user updating/changing
@@ -187,7 +186,7 @@
 	//Global Chart helpers object for utility methods and classes
 	var helpers = Chart.helpers = {};
 
-		//-- Basic js utility methods
+	//-- Basic js utility methods
 	var each = helpers.each = function(loopable,callback,self){
 			var additionalArgs = Array.prototype.slice.call(arguments, 3);
 			// Check to see if null or undefined firstly.
@@ -275,8 +274,7 @@
 		inherits = helpers.inherits = function(extensions){
 			//Basic javascript inheritance based on the model created in Backbone.js
 			var parent = this;
-			var ChartElement = (extensions && extensions.hasOwnProperty("constructor")) ? extensions.constructor : function(){ return parent.apply(this, arguments); };
-
+			var ChartElement = (extensions && extensions.hasOwnProperty("constructor")) ? extensions.constructor : function(){return parent.apply(this, arguments); };
 			var Surrogate = function(){ this.constructor = ChartElement;};
 			Surrogate.prototype = parent.prototype;
 			ChartElement.prototype = new Surrogate();
@@ -286,7 +284,6 @@
 			if (extensions) extend(ChartElement.prototype, extensions);
 
 			ChartElement.__super__ = parent.prototype;
-
 			return ChartElement;
 		},
 		noop = helpers.noop = function(){},
@@ -823,6 +820,9 @@
 		this.chart = chart;
 		this.id = uid();
 		//Add the chart instance to the global namespace
+		// BB: changing this to default to chart-0 does not help with hover
+		delete Chart.instances;
+		Chart.instances = {};
 		Chart.instances[this.id] = this;
 
 		// Initialize is always called when a chart type is created
@@ -908,7 +908,6 @@
 		showTooltip : function(ChartElements, forceRedraw){
 			// Only redraw the chart if we've actually changed what we're hovering on.
 			if (typeof this.activeElements === 'undefined') this.activeElements = [];
-
 			var isChanged = (function(Elements){
 				var changed = false;
 
@@ -993,7 +992,8 @@
 								y: (yMin + yMax)/2
 							};
 						}).call(this, dataIndex);
-
+					
+					// good
 					new Chart.MultiTooltip({
 						x: medianPosition.x,
 						y: medianPosition.y,
@@ -1020,6 +1020,7 @@
 					}).draw();
 
 				} else {
+					// good
 					each(ChartElements, function(Element) {
 						var tooltipPosition = Element.tooltipPosition();
 						new Chart.Tooltip({
@@ -1049,7 +1050,6 @@
 	});
 
 	Chart.Type.extend = function(extensions){
-
 		var parent = this;
 
 		var ChartType = function(){
@@ -1071,7 +1071,6 @@
 			//If none are defined, we'll use a clone of the chart type this is being extended from.
 			//I.e. if we extend a line chart, we'll use the defaults from the line chart if our new chart
 			//doesn't define some defaults of their own.
-
 			var baseDefaults = (Chart.defaults[parent.prototype.name]) ? clone(Chart.defaults[parent.prototype.name]) : {};
 
 			Chart.defaults[chartName] = extend(baseDefaults,extensions.defaults);
@@ -2369,7 +2368,6 @@
 		//Initialize is fired when the chart is initialized - Data is passed in as a parameter
 		//Config is automatically merged by the core of Chart.js, and is available at this.options
 		initialize:  function(data){
-
 			//Declare segments as a static property to prevent inheriting across the Chart type prototype
 			this.segments = [];
 			this.outerRadius = (helpers.min([this.chart.width,this.chart.height]) -	this.options.segmentStrokeWidth/2)/2;
@@ -2384,7 +2382,6 @@
 			if (this.options.showTooltips){
 				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
 					var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];	
-
 					helpers.each(this.segments,function(segment){
 						segment.restore(["fillColor"]);
 					});

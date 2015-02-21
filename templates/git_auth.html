@@ -15,8 +15,6 @@
     <div class="full_wrapper">
       <p class="title"> Github Language Visualization</p>
       <hr />
-      <!-- <p class="title"> Would you like a chart of all the languages you use on github?</p> -->
-      
       <div class="home_wrapper">
 
         <div class='home_about'>
@@ -26,9 +24,9 @@
             <li class='about_item'> Easy to add to a portfolio or share </li>
             <li class='about_item'> See what languages your followers use </li>
           </ul>
-          <a href="#login"> 
+          <a  name="login" href="https://github.com/login/oauth/authorize?scope=user:email&client_id={{id}}">
             <div class="get_yours_button">
-            I want my own!
+            Login with Github
             </div>
           </a>
         </div>
@@ -38,20 +36,6 @@
         <div class='home_languages_container'>
         </div>
       </div>
-
-      <div class="login_container">
-        <a  name="login" href="https://github.com/login/oauth/authorize?scope=user:email&client_id={{id}}">
-          <div class="git_login_button">
-          Login with Github
-          </div>
-        </a>
-        <div class="login_image">
-          <img class="octocat" src="/static/Octocat.png" alt="Octocat"/>
-        </div>
-
-      </div>
-    </div>
-
     <footer>
       <span> Made with <i class="fa fa-heart-o"></i>  by Becca Bruggman </span>
     </footer>
@@ -60,6 +44,7 @@
     var count = 2;
     var ctx = $("#homeChart").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Pie(home_data[count],options);
+    
     for (item in home_data[count]) {
       $(".home_languages_container").append('<div class="coding_language" style="color:' + home_data[count][item].color + '">' + home_data[count][item].label +  ' : ' + home_data[count][item].value + '.0%</div>')
     }

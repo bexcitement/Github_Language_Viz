@@ -12,17 +12,18 @@ def githubViz(user, cl_id, cl_secret):
 	else:
 		languages_dict = {}
 		followers = []
+		dates = []  
 		for repo in json_response:
-			for key, value in repo.iteritems():	
-				if repo['language'] == None:
-					continue
-				else: 
-					if repo['language'] in languages_dict:
-						languages_dict[repo['language']] += repo['size']
-					else:
-						languages_dict[repo['language']] = repo['size']
+			if repo['language'] is None:
+				continue
+			else:
+				if repo['language'] in languages_dict:
+					languages_dict[repo['language']] += repo['size']
+				else:
+					languages_dict[repo['language']] = repo['size']
+				dates.append(repo['pushed_at'])
 
 		for follower in json_followers:
 			followers.append(follower['login'])
 
-	return languages_dict, followers
+	return languages_dict, followers, dates

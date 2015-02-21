@@ -29,9 +29,9 @@ form {
 }
 
 .data_container {
-	margin: 0 auto 100px;
+	margin: 0 auto;
 	width: 80%;
-	height: 330px;
+	height: 400px;
 	padding: 20px;
 	background-color: #fff;
 }
@@ -103,8 +103,9 @@ form {
 	margin: 0 auto;
 }
 
-.followers_title {
+.title.followers_title {
 	text-decoration: underline;
+	margin: 60px auto 20px;
 }
 
 .followers_container {
@@ -151,7 +152,7 @@ form {
 .home_wrapper {
 	min-height: 500px;
 	width: 90%;
-	margin: 40px auto 0;
+	margin: 0 auto;
 }
 
 .home_about {
@@ -175,8 +176,9 @@ form {
 	text-align: center;
 	padding: 25px 0px;
 	background-color: #9CDAEF;
-	width: 50%;
-	margin: 0 auto;
+	width: 80%;
+	margin: 40px auto;
+	text-transform: uppercase;
 }
 
 .home_chart_container {
@@ -204,42 +206,12 @@ form {
 	float: left;
 }
 
-
-.git_login_button {
-	width: 45%;
-	text-align: center;
-	padding: 25px 0px;
-	background-color: #9CDAEF;
-	float: left;	
-	margin: 100px 0 0;
-	text-transform: uppercase;
-}
-
-.login_container a,
-.login_container a:visited,
-.login_container a:hover,
-.login_container a:active,
 .home_about a,
 .home_about a:visited,
 .home_about a:hover,
 .home_about a:active {
 	text-decoration: none;
 	color: black;
-}
-
-.login_container {
-	width: 50%;
-	margin: 100px auto 0px;
-	min-height: 350px;
-}
-
-.login_image {
-	width: 50%;
-	float: right;
-}
-
-.octocat {
-	width: 300px;
 }
 
 hr {
@@ -250,7 +222,6 @@ footer {
 	left: 0px;
 	bottom: 0px;
 	width: 100%;
-	height: 5%;
 	padding: 5px;
 }
 
@@ -261,5 +232,27 @@ footer {
 .full_wrapper:after {
 	content: "";
 	display: block;
+}
+
+/* Styles for slider */
+
+#slider,
+.ui-rangeSlider-innerBar,
+.ui-rangeSlider-bar {
+	width: 50%;
+}
+
+div.ui-rangeSlider-bar,
+div.ui-rangeSlider-leftHandle,
+div.ui-rangeSlider-handle-inner,
+div.ui-rangeSlider-container {
+	height: 5px;
+}
+
+#slider {
+	margin: 20px auto;
+}
+div.ui-rangeSlider-bar {
+	background-color: #9CDAEF;
 }
 

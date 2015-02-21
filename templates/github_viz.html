@@ -11,6 +11,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 		<script src="/static/Chart.js"></script>
 		<script src="/static/jQDateRangeSlider-min.js"></script>
+		<script src="/static/jquery-dateFormat.min.js"></script>
 		<script src="/static/github_viz.js"></script>
 		<title>Github Language Visualization</title>
 		<meta name=”description” content=”Github language visualization by Becca Bruggman”>
@@ -22,8 +23,6 @@
 			<div class="title">Github Language Visualization</div>
 			<hr />
 			{% if github_viz is mapping %}
-				<div id="slider"></div>
-
 				<div class="data_container">
 					<div class="wrapper">
 						<div class="chart_container">
@@ -39,7 +38,11 @@
 							</div>
 						</div>
 					</div>
+					<div id="slider"></div>
+
 				</div>
+
+
 
 				<div class="form_container">
 					<form action="/?code={{code}}" method="POST" name="username_submit">
@@ -64,14 +67,14 @@
 
 			var total = 0;
 
-			var data = [];
+			var language_data = [];
 
 			{% if github_viz is mapping %}
 				$(".chart_container").after("<div class='languages_container'><div class='user'>{{username}}</div></div>")
 				{% for lang, num in github_viz.iteritems() %}
 					total+= {{num}}
 
-					data.push({
+					language_data.push({
 						value: {{num}},
 						label: "{{lang}}",
 						color: colors[Object.keys(colors)[{{loop.index-1}}]]['color'],
@@ -85,7 +88,8 @@
 				{% endfor %}
 
 				var ctx = $("#myChart").get(0).getContext("2d");
-				var myPieChart = new Chart(ctx).Pie(data,options);
+				var myPieChart = new Chart(ctx).Pie(language_data,options);
+				console.log(myPieChart)
 
 				{% if followers is defined %}
 					$(".data_container").after('<div class="title followers_title"> {{username}} is following, see their charts! </div><div class="followers_container"></div>')
@@ -95,42 +99,71 @@
 					{% endfor %}
 				{% endif %}
 
-				$('.lang_num').each(function() {
-					var lang_num = $(this).text();
-					$(this).text(((lang_num / total) * 100).toFixed(2) + '%')
-				});
-
-				$('.coding_language').each(function(index) {
-					$(this).css('color', (data[index].color).toString());
-				})
-
-				var all_languages = $('.languages_container');
-				var language_list = all_languages.find('.coding_language');
-
-				language_list.sort(function(a,b){
-					var an = parseInt(a.getAttribute('data-name'), 10),
-						bn = parseInt(b.getAttribute('data-name'), 10);
-
-					if(an < bn) {
-						return 1;
-					}
-					if(an > bn) {
-						return -1;
-					}
-					return 0;
-				});
-
-				language_list.detach().appendTo(all_languages);
 				
+				format_languages();
+
 				var d = new Date();
+				var git_min_date = $.format.date('{{dates}}', 'yyyy, MM, dd');
 
 				$("#slider").dateRangeSlider({
 					bounds:{
-					    min: new Date(2008, 3, 10),
+					    min: new Date(git_min_date),
+					    max: new Date(d.getFullYear(), d.getMonth(), d.getDate())
+				  	},
+				  	defaultValues: {
+				  		min: new Date(2008, 3, 10),
 					    max: new Date(d.getFullYear(), d.getMonth(), d.getDate())
 				  	},
 				  	arrows: false,
+
 				});
+
+				$("#slider").bind("userValuesChanged", function(e, slider_data){
+				  console.log("Values just changed. min: " + slider_data.values.min + " max: " + slider_data.values.max);
+				  	date_min = $.format.date(slider_data.values.min, 'yyyy-MM-dd');
+					date_max = $.format.date(slider_data.values.max, 'yyyy-MM-dd');
+				  	$.ajax({
+						url: "https://api.github.com/users/{{username}}/repos?per_page=1000&client_id={{id}}&client_secret={{secret}}",
+						success: function(data) {
+							total = 0;
+							language_data = [];
+							languages_dict = {};
+							$(".languages_container").find('.coding_language').remove();
+							for (repo in data) {
+								var pushed_date = $.format.date(data[repo]['pushed_at'], 'yyyy-MM-dd');
+								if (pushed_date > date_min && pushed_date < date_max) {
+									if (data[repo]['language'] != null) {
+										if (data[repo]['language'] in languages_dict) {
+											languages_dict[data[repo]['language']]+= data[repo]['size'];
+										}
+										else {
+											languages_dict[data[repo]['language']]= data[repo]['size'];
+										}
+										total+= data[repo]['size'];
+									}
+								}
+							}
+							var i = 0;
+							for (lang in languages_dict) {
+								language_data.push({
+									value: languages_dict[lang],
+									label: lang.toString(),
+									color: colors[Object.keys(colors)[i]]['color'],
+									highlight: colors[Object.keys(colors)[i]]['highlight']
+
+								})
+								i++;
+
+								$(".languages_container").append('<div data-name=' +  languages_dict[lang] + ' class="coding_language"> ' + lang.toString() + ' : <span class="lang_num">' +languages_dict[lang] + '</span><span class="num_hover">' + languages_dict[lang] +'kb</span></div>')
+							}
+							
+							ctx = $("#myChart").get(0).getContext("2d");
+							var myPieChart = new Chart(ctx).Pie(language_data,options);
+							format_languages();
+						}
+					});
+				});
+
 			{% endif %}
 		</script>
 

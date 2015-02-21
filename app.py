@@ -10,7 +10,7 @@ import re
 app = Flask(__name__)
 
 id = #client id
-secret = # client secret
+secret = #client secret
 
 @app.route('/', methods=['GET', 'POST'])
 def index(follower=None):
@@ -23,8 +23,9 @@ def index(follower=None):
 		git_data = githubViz(username, id, secret)
 		github_user = git_data[0]
 		github_user_followers = sorted([x.encode('utf-8') for x in git_data[1]], key=lambda s: s.lower())
+		github_date = sorted([x.encode('utf-8') for x in git_data[2]])[0]
 		return render_template('github_viz.html', form=form, github_viz = github_user, 
-			followers = github_user_followers, username = username, code = code)
+			followers = github_user_followers, dates = github_date, username = username, code = code, id=id, secret=secret)
 
 	elif request.method =='GET':
 		return redirect('/git_auth')
@@ -40,7 +41,7 @@ def index(follower=None):
 		github_user = git_data[0]
 		github_user_followers = sorted([x.encode('utf-8') for x in git_data[1]], key=lambda s: s.lower())
 		return render_template('github_viz.html', form=form, github_viz = github_user, 
-			followers = github_user_followers, username = username, code=code)	
+			followers = github_user_followers, username = username, code=code, id=id, secret=secret)	
 
 # only used for navigating to followers under chart
 # @app.route('/follower_chart?username=<follower>', methods=['GET', 'POST'])
