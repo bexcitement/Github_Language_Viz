@@ -6,13 +6,13 @@ def githubViz(user, cl_id, cl_secret):
 	
 	json_response = r.json()
 	json_followers = followers.json()
+	followers = []
+	dates = []  
 
 	if isinstance(json_response, dict):
 		languages_dict = 'sad face'
 	else:
 		languages_dict = {}
-		followers = []
-		dates = []  
 		for repo in json_response:
 			if repo['language'] is None:
 				continue

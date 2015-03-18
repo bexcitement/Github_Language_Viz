@@ -87,73 +87,33 @@ var home_data = [
 	highlight: "#ff005a"
 	}],
 
-
 ];
 
-var colors = {
-	"Red": {
-		"color":"#F7464A",
-	    "highlight": "#F7464A",
-	},
-	"Green": {
-		"color": "#46BFBD",
-	    "highlight": "#5AD3D1"
-	},
-	"Yellow": {
-		"color": "#FDB45C",
-	    "highlight": "#FFC870"
-	},
-	"Light Salmon": {
-		"color":"#ffa07a",
-	    "highlight": "#ffa07a",
-	},
-	"Purple": {
-		"color": "#730073",
-	    "highlight": "#730073"
-	},
-	"Sky Blue": {
-		"color": "#b2b2ff",
-	    "highlight": "#b2b2ff"
-	},
-	"Orange": {
-		"color":"#ff2500",
-	    "highlight": "#ff2500",
-	},
-	"Bright Green": {
-		"color": "#00ff25",
-	    "highlight": "#00ff25"
-	},
-	"Hot Pink": {
-		"color": "#ff005a",
-	    "highlight": "#ff005a"
-	},
-	"Aqua": {
-		"color":"#00824b",
-	    "highlight": "#00824b",
-	},
-	"Golden Rod": {
-		"color": "#cf7700",
-	    "highlight": "#cf7700"
-	},
-	"Pea Green": {
-		"color": "#788200",
-	    "highlight": "#788200"
-	}
-
-};
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
 var timer = 0;
 
 function setResetInterval(bool){
   if(bool){
     timer = setInterval(function(){
-      count--;
-      console.log(count)
-      myPieChart = new Chart(ctx).Pie(home_data[count],options);
+      	count--;
+
       $(".home_languages_container").empty();
       for (item in home_data[count]) {
       	$(".home_languages_container").append('<div class="coding_language" style="color:' + home_data[count][item].color + '">' + home_data[count][item].label +  ' : ' + home_data[count][item].value + '.0%</div>')
+      	myPieChart.segments[item].value = home_data[count][item].value;
+		myPieChart.segments[item].label = home_data[count][item].label;
+		myPieChart.segments[item].highlightColor = home_data[count][item].color;
+		myPieChart.segments[item].fillColor = home_data[count][item].color;
       }
+      myPieChart.update();
       if (count == 0) {
         count=3;
       }
@@ -195,4 +155,9 @@ var format_languages = function(){
 
 	language_list.detach().appendTo(all_languages);
 };
+
+var formParameters = function() {
+	var formName = $("#username").val();
+	$('form').attr('action', '/githubviz/?username=' + formName);
+}
 

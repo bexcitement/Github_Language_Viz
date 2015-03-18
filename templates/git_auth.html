@@ -12,17 +12,31 @@
     <meta name=”description” content=”Github language visualization by Becca Bruggman”>
   </head>
   <body>
+	<!-- Google Tag Manager -->
+	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MB9HTV"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-MB9HTV');</script>
+	<!-- End Google Tag Manager -->
+
     <div class="full_wrapper">
       <p class="title"> Github Language Visualization</p>
       <hr />
       <div class="home_wrapper">
-
-        <div class='home_about'>
-          <div  class='about_title'> What languages are you using? </div>
+         <div class="home_chart_container">
+          <canvas id="homeChart" width="400" height="400"></canvas>
+        </div>
+        <div class='home_languages_container'></div>
+      <div class='home_about'>
+        
+        <div  class='about_title'> What languages are you using? </div>
           <ul>
             <li class='about_item'> Get a visualization from all your repos on Github </li>
             <li class='about_item'> Easy to add to a portfolio or share </li>
-            <li class='about_item'> See what languages your followers use </li>
+            <li class='about_item'> Explore what people you follow use </li>
           </ul>
           <a  name="login" href="https://github.com/login/oauth/authorize?scope=user:email&client_id={{id}}">
             <div class="get_yours_button">
@@ -30,11 +44,7 @@
             </div>
           </a>
         </div>
-        <div class="home_chart_container">
-          <canvas id="homeChart" width="400" height="400"></canvas>
-        </div>
-        <div class='home_languages_container'>
-        </div>
+       
       </div>
     <footer>
       <span> Made with <i class="fa fa-heart-o"></i>  by Becca Bruggman </span>

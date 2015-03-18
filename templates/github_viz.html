@@ -19,6 +19,16 @@
 
 
 	<body>
+		<!-- Google Tag Manager -->
+		<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MB9HTV"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-MB9HTV');</script>
+		<!-- End Google Tag Manager -->
+
 		<div class="full_wrapper">			
 			<div class="title">Github Language Visualization</div>
 			<hr />
@@ -27,14 +37,15 @@
 					<div class="wrapper">
 						<div class="chart_container">
 							<canvas id="myChart" width="400" height="400"></canvas>
+							<img class="no_pie" src="/static/octobiwan.jpg"/>
 						</div>
-
+		
 						<div class="share_container">
 							<div>Share your pie</div>
 							<div class="icon_container">
-								<a href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:5000/?username={{username}}" target="_blank"><i class="fa fa-facebook"></i> </a>
-								<a href="https://twitter.com/home?status=Graph%20of%20all%20my%20coding%20languages%20on%20%40github.%20Sweet!%20http://127.0.0.1:5000/?username={{username}}" target="_blank"><i class="fa fa-twitter"></i></a>
-								<a href="https://www.linkedin.com/shareArticle?mini=true&url=http://127.0.0.1:5000/?username={{username}}&title=Check%20out%20the%20languages%20I%20use%20on%20github!&summary=&source=" target="_blank"><i class="fa fa-linkedin"></i></a>
+								<a href="https://www.facebook.com/sharer/sharer.php?u=http://bexcitement.com/githubviz/?username={{username}}" target="_blank"><i class="fa fa-facebook"></i> </a>
+								<a href="https://twitter.com/home?status=Graph%20of%20all%20my%20coding%20languages%20on%20%40github.%20Sweet!%20http://bexcitement.com/githubviz/?username={{username}}%20cc%20@bexcitement" target="_blank"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.linkedin.com/shareArticle?mini=true&url=http://bexcitement.com/githubviz/?username={{username}}&title=Check%20out%20the%20languages%20I%20use%20on%20github!&summary=&source=" target="_blank"><i class="fa fa-linkedin"></i></a>
 							</div>
 						</div>
 					</div>
@@ -42,22 +53,20 @@
 
 				</div>
 
-
-
-				<div class="form_container">
-					<form action="/?code={{code}}" method="POST" name="username_submit">
-						{% from "_formhelpers.html" import render_field %}
-							<div id="submitText"> Want to see someone else? {{form.username(placeholder="Enter username", size="15")}} </div>
-							<input type="submit" value="SUBMIT" class="Submit">
-					</form>
-				</div>
-
 			{% elif github_viz is string %}
 				<div class="user_invalid">
 					<div class="title"> We can't find that github handle... </div>
 					<img class="pusheen" src="http://media.giphy.com/media/ktvFa67wmjDEI/giphy.gif" alt="Sad Pusheen"/>
 				</div>
+
 			{% endif %}
+			<div class="form_container">
+				<form method="POST" name="username_submit" action="" onsubmit="formParameters()">
+					{% from "_formhelpers.html" import render_field %}
+						<div id="submitText"> Want to see someone else? {{form.username(placeholder="Enter username", size="15")}} </div>
+						<input type="submit" value="SUBMIT" class="Submit">
+				</form>
+			</div>
 		</div>
 
 		<footer>
@@ -65,24 +74,26 @@
 		</footer>
 		<script type="text/javascript">
 
+			var dates = "{{dates}}";
 			var total = 0;
-
+			var color;
 			var language_data = [];
 
 			{% if github_viz is mapping %}
 				$(".chart_container").after("<div class='languages_container'><div class='user'>{{username}}</div></div>")
 				{% for lang, num in github_viz.iteritems() %}
 					total+= {{num}}
+					color = getRandomColor();
+					console.log(color);
 
 					language_data.push({
 						value: {{num}},
 						label: "{{lang}}",
-						color: colors[Object.keys(colors)[{{loop.index-1}}]]['color'],
-						highlight: colors[Object.keys(colors)[{{loop.index-1}}]]['highlight']
+						color: color,
+						highlight: color
 
 					})
 
-					// need to sort based on num
 					$(".languages_container").append('<div data-name={{num}} class="coding_language"> {{lang}} : <span class="lang_num">{{num}}</span><span class="num_hover">{{num}}kb</span></div>')
 
 				{% endfor %}
@@ -92,10 +103,9 @@
 				console.log(myPieChart)
 
 				{% if followers is defined %}
-					$(".data_container").after('<div class="title followers_title"> {{username}} is following, see their charts! </div><div class="followers_container"></div>')
+					$(".data_container").after('<div class="title followers_title"> See what others have baking! </div><div class="followers_container"></div>')
 					{% for follower in followers %}
-						$(".followers_container").append('<div class="follower_name"> <a href="/?username={{follower}}&code={{code}}">{{follower}}</a></div>')
-
+						$(".followers_container").append('<div class="follower_name"> <a href="/githubviz/?username={{follower}}">{{follower}}</a></div>')
 					{% endfor %}
 				{% endif %}
 
@@ -115,8 +125,20 @@
 					    max: new Date(d.getFullYear(), d.getMonth(), d.getDate())
 				  	},
 				  	arrows: false,
+				  	formatter:function(val){
+				        var days = val.getDate(),
+				        	month = val.getMonth() + 1,
+				        	year = val.getFullYear();
+				        return month + "-" + days + "-" + year;
+				    }
 
 				});
+
+				if (dates.indexOf(",") > -1) {
+					$('.languages_container').append('<div class="no_pie">No code could be found</div>')
+					$('.no_pie').show();
+					$('#myChart').hide();
+				}
 
 				$("#slider").bind("userValuesChanged", function(e, slider_data){
 				  console.log("Values just changed. min: " + slider_data.values.min + " max: " + slider_data.values.max);
@@ -128,11 +150,16 @@
 							total = 0;
 							language_data = [];
 							languages_dict = {};
+							repo_name = [];
+							count = 0;
 							$(".languages_container").find('.coding_language').remove();
 							for (repo in data) {
 								var pushed_date = $.format.date(data[repo]['pushed_at'], 'yyyy-MM-dd');
-								if (pushed_date > date_min && pushed_date < date_max) {
+								if (pushed_date >= date_min && pushed_date <= date_max) {
 									if (data[repo]['language'] != null) {
+										repo_name[count]+=data[repo]['name']
+										count++
+
 										if (data[repo]['language'] in languages_dict) {
 											languages_dict[data[repo]['language']]+= data[repo]['size'];
 										}
@@ -145,20 +172,67 @@
 							}
 							var i = 0;
 							for (lang in languages_dict) {
+								color = getRandomColor();
+								console.log('html');
+								console.log(lang.toString())
+								console.log(color);
+
 								language_data.push({
 									value: languages_dict[lang],
 									label: lang.toString(),
-									color: colors[Object.keys(colors)[i]]['color'],
-									highlight: colors[Object.keys(colors)[i]]['highlight']
+									color: color,
+									highlight: color
 
 								})
+
+								console.log(languages_dict);
+								console.log(language_data);
+
+								if (i > (myPieChart.segments.length-1)) {
+									myPieChart.addData({
+										value: language_data[i].value,
+										label: language_data[i].label,
+										color: language_data[i].color,
+										highlight: language_data[i].highlight
+									})
+									
+								} else {
+									myPieChart.segments[i].value = language_data[i].value;
+									myPieChart.segments[i].label = language_data[i].label;
+									myPieChart.segments[i].highlightColor = language_data[i].color;
+									myPieChart.segments[i].fillColor = language_data[i].color;
+								}
+								
 								i++;
 
 								$(".languages_container").append('<div data-name=' +  languages_dict[lang] + ' class="coding_language"> ' + lang.toString() + ' : <span class="lang_num">' +languages_dict[lang] + '</span><span class="num_hover">' + languages_dict[lang] +'kb</span></div>')
+								
 							}
-							
-							ctx = $("#myChart").get(0).getContext("2d");
-							var myPieChart = new Chart(ctx).Pie(language_data,options);
+
+							// set values of PieChart segments to 0 
+							// if there are more segments then items in range
+							if (i < myPieChart.segments.length) {
+								while ( i != myPieChart.segments.length) {
+									myPieChart.segments[myPieChart.segments.length-1].value = 0;
+									myPieChart.segments[myPieChart.segments.length-1].highlightColor = "";
+									myPieChart.segments[myPieChart.segments.length-1].fillColor = ""
+									myPieChart.segments.length-=1
+								}
+							}
+
+							$('.languages_container').find('.no_pie').remove();
+
+							if (i===0){
+								$('.languages_container').append('<div class="no_pie">No code could be found</div>')
+								$('.no_pie').show();
+								$('#myChart').hide();
+							}
+							else {
+								$('.no_pie').hide();
+								$('#myChart').show();
+							}
+
+							myPieChart.update();
 							format_languages();
 						}
 					});
